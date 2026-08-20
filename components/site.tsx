@@ -7,7 +7,7 @@ import { createPortal } from 'react-dom'
 import { ArrowUpRight, Menu, X, ChevronDown, MapPin, ShieldCheck, Activity, FileCheck2, UserRoundCheck, MapPinCheck, PhoneCall, SearchCheck, Loader2, Mail, Clock, CheckCircle2, AlertCircle } from 'lucide-react'
 import { contactFormSchema } from '@/lib/validation'
 
-function LinkedInIcon(){return <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.86 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>}
+function LinkedInIcon() { return <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.86 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" /></svg> }
 import { logoUrl, navItems, services, process as processSteps, standards, faqs, crmStats, crmFeatures, team, partners } from '@/lib/constants'
 
 export function Header() {
@@ -25,7 +25,7 @@ const standardIcons: Record<string, string> = {
   'SOC 2': '/standards/soc2.png',
   'DPDP Ready': '/standards/dpdp.png',
 }
-export function TrustStrip() { return <section className="trust-strip"><div className="container trust-inner"><span className="trust-title">Built for secure banking verification</span>{standards.map(([a]) => <span className="trust-item" key={a}><img src={standardIcons[a]} alt="" width={22} height={22} className="trust-icon"/>{a}</span>)}</div></section> }
+export function TrustStrip() { return <section className="trust-strip"><div className="container trust-inner"><span className="trust-title">Built for secure banking verification</span>{standards.map(([a]) => <span className="trust-item" key={a}><img src={standardIcons[a]} alt="" width={22} height={22} className="trust-icon" />{a}</span>)}</div></section> }
 export function ServicesGrid({ limit }: { limit?: number } = {}) { return <div className="services-grid">{(limit ? services.slice(0, limit) : services).map(([num, title, desc, icon]) => { const I = ({ UserRoundCheck, MapPinCheck, PhoneCall, FileCheck2, ShieldCheck, SearchCheck } as any)[icon]; return <article className="service-card reveal" key={title}><span className="service-num">{num}</span><div className="icon-box"><I size={22} /></div><h3>{title}</h3><p>{desc}</p><ArrowUpRight className="card-arrow" size={20} /></article> })}</div> }
 export function ProcessTimeline() { return <div className="process-line">{processSteps.map(([n, t, d]) => <div className="process-step reveal" key={n}><span>{n}</span><div><h3>{t}</h3><p>{d}</p></div></div>)}</div> }
 export function FAQ() { const [open, setOpen] = useState(0); return <div className="faq-list">{faqs.map(([q, a], i) => <div className="faq-item" key={q}><button onClick={() => setOpen(open === i ? -1 : i)} aria-expanded={open === i}><span>{q}</span><ChevronDown className={open === i ? 'rotate' : ''} /></button>{open === i && <p>{a}</p>}</div>)}</div> }
@@ -55,7 +55,7 @@ export function CRMPreview() {
   return <div className="crm-mockup reveal"><div className="crm-top"><span className="crm-logo">C</span><b>CrediScout CRM</b><span className="crm-live"><Activity size={13} /> Live operations</span></div><div className="crm-body"><aside>{CRM_TABS.map(t => <button type="button" key={t} className={t === tab ? 'side-active' : ''} onClick={() => setTab(t)}>{t}</button>)}</aside><div className="crm-content"><div className="crm-stats">{liveStats.map(([a, b], i) => <div key={a}><span>{a}</span><strong>{b}</strong><small className={i === 1 ? 'warn' : ''}>{i === 0 ? '↑ 12.8%' : i === 1 ? 'Needs review' : '↑ 8.4%'}</small></div>)}</div><div className="crm-panels"><div className="map-panel"><div className="map-grid"><MapPin size={25} /><span className="map-dot one" /><span className="map-dot two" /><span className="map-dot three" /></div><div className="map-caption"><b>Field coverage</b><span>42 active locations</span></div></div><div className="visit-panel"><b>{tab === 'Overview' ? 'Recent visits' : tab === 'Cases' ? 'Recent cases' : tab === 'Field teams' ? 'Team status' : 'Recent reports'}</b>{visits.map(([x, meta], i) => <div className="visit" key={x}><span className={`status-dot s${i}`} /><span>{x}</span><small>{meta}</small></div>)}</div></div></div></div></div>
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_BRIGHTO_API_URL || 'http://localhost:3001'
+const API_BASE_URL = process.env.NEXT_PUBLIC_BRIGHTO_API_URL || 'https://www.brightoindia.com'
 const DEMO_SERVICES = services.map(s => s[1] as string).concat('Other / General Enquiry')
 
 interface DemoFormState { name: string, organization: string, email: string, phone: string, service: string, message: string, consent: boolean, website: string }
