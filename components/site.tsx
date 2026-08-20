@@ -6,9 +6,48 @@ import { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { ArrowUpRight, Menu, X, ChevronDown, MapPin, ShieldCheck, Activity, FileCheck2, UserRoundCheck, MapPinCheck, PhoneCall, SearchCheck, Loader2, Mail, Clock, CheckCircle2, AlertCircle } from 'lucide-react'
 import { contactFormSchema } from '@/lib/validation'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { BorderRotate } from '@/components/ui/animated-gradient-border'
+
+if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger)
 
 function LinkedInIcon() { return <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.86 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" /></svg> }
 import { logoUrl, navItems, services, process as processSteps, standards, faqs, crmStats, crmFeatures, team, partners } from '@/lib/constants'
+
+export function SiteReveal() {
+  const path = usePathname()
+  useEffect(() => { window.scrollTo(0, 0) }, [path])
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let ctx: gsap.Context | undefined
+    const id = requestAnimationFrame(() => {
+      ctx = gsap.context(() => {
+        gsap.utils.toArray<HTMLElement>('.reveal').forEach(el => {
+          if (el.dataset.revealed) return
+          el.dataset.revealed = '1'
+          gsap.from(el, {
+            y: 26, opacity: 0, duration: .7, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', fastScrollEnd: true },
+          })
+        })
+        gsap.utils.toArray<HTMLElement>('.insight-bars').forEach(bars => {
+          if (bars.dataset.revealed) return
+          bars.dataset.revealed = '1'
+          const items = bars.querySelectorAll('i')
+          gsap.from(items, {
+            scaleY: 0, transformOrigin: 'bottom', opacity: 0, duration: .7, stagger: .09, ease: 'power3.out',
+            scrollTrigger: { trigger: bars, start: 'top 90%', fastScrollEnd: true },
+          })
+        })
+        ScrollTrigger.refresh()
+        window.addEventListener('load', () => ScrollTrigger.refresh())
+      })
+    })
+    return () => { cancelAnimationFrame(id); ctx?.revert() }
+  }, [path])
+  return null
+}
 
 export function Header() {
   const [open, setOpen] = useState(false); const path = usePathname()
@@ -26,7 +65,8 @@ const standardIcons: Record<string, string> = {
   'DPDP Ready': '/standards/dpdp.png',
 }
 export function TrustStrip() { return <section className="trust-strip"><div className="container trust-inner"><span className="trust-title">Built for secure banking verification</span>{standards.map(([a]) => <span className="trust-item" key={a}><img src={standardIcons[a]} alt="" width={22} height={22} className="trust-icon" />{a}</span>)}</div></section> }
-export function ServicesGrid({ limit }: { limit?: number } = {}) { return <div className="services-grid">{(limit ? services.slice(0, limit) : services).map(([num, title, desc, icon]) => { const I = ({ UserRoundCheck, MapPinCheck, PhoneCall, FileCheck2, ShieldCheck, SearchCheck } as any)[icon]; return <article className="service-card reveal" key={title}><span className="service-num">{num}</span><div className="icon-box"><I size={22} /></div><h3>{title}</h3><p>{desc}</p><ArrowUpRight className="card-arrow" size={20} /></article> })}</div> }
+const serviceGradient = { primary: '#0c3a24', secondary: '#00a650', accent: '#c8f24e' }
+export function ServicesGrid({ limit }: { limit?: number } = {}) { return <div className="services-grid">{(limit ? services.slice(0, limit) : services).map(([num, title, desc, icon]) => { const I = ({ UserRoundCheck, MapPinCheck, PhoneCall, FileCheck2, ShieldCheck, SearchCheck } as any)[icon]; return <BorderRotate key={title} animationMode="stop-rotate-on-hover" animationSpeed={4} gradientColors={serviceGradient} backgroundColor="#ffffff" borderWidth={2} borderRadius={18} className="service-card-border reveal"><article className="service-card"><span className="service-num">{num}</span><div className="icon-box"><I size={22} /></div><h3>{title}</h3><p>{desc}</p><ArrowUpRight className="card-arrow" size={20} /></article></BorderRotate> })}</div> }
 export function ProcessTimeline() { return <div className="process-line">{processSteps.map(([n, t, d]) => <div className="process-step reveal" key={n}><span>{n}</span><div><h3>{t}</h3><p>{d}</p></div></div>)}</div> }
 export function FAQ() { const [open, setOpen] = useState(0); return <div className="faq-list">{faqs.map(([q, a], i) => <div className="faq-item" key={q}><button onClick={() => setOpen(open === i ? -1 : i)} aria-expanded={open === i}><span>{q}</span><ChevronDown className={open === i ? 'rotate' : ''} /></button>{open === i && <p>{a}</p>}</div>)}</div> }
 const CRM_TABS = ['Overview', 'Cases', 'Field teams', 'Reports']
@@ -141,7 +181,7 @@ export function DemoRequestForm() {
     }
   }
 
-  return <section id="demo" className="section demo-section">
+  return <section id="demo" className="section demo-section compact-section">
     <div className="container demo-grid">
       <div className="demo-info">
         <p className="eyebrow">Request a demo</p>
