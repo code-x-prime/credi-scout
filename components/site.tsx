@@ -17,7 +17,10 @@ import { logoUrl, navItems, services, process as processSteps, standards, faqs, 
 
 export function SiteReveal() {
   const path = usePathname()
-  useEffect(() => { window.scrollTo(0, 0) }, [path])
+  useEffect(() => {
+    window.history.scrollRestoration = 'manual'
+    window.scrollTo(0, 0)
+  }, [path])
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     let ctx: gsap.Context | undefined
@@ -41,6 +44,7 @@ export function SiteReveal() {
           })
         })
         ScrollTrigger.refresh()
+        window.scrollTo(0, 0)
         window.addEventListener('load', () => ScrollTrigger.refresh())
       })
     })
