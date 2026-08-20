@@ -2907,9 +2907,6 @@ svg {
   height: clamp(160px, 20vw, 260px);
 }
 .capability-image img {
-  display: block;
-  width: 100%;
-  height: 100%;
   object-fit: cover;
 }
 .scroll-stack-index {
@@ -2930,8 +2927,11 @@ svg {
 @media (max-width: 850px) {
   .capability-card {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 18px;
+  }
+  .capability-copy {
+    flex: 0 0 auto;
   }
   .capability-image {
     width: 100%;

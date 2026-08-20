@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 interface ScrollProject {
   num: string
   title: string
@@ -14,7 +16,14 @@ const CapabilityCard = ({ i, num, title, subtitle, src }: { i: number } & Scroll
         <p>{subtitle}</p>
       </div>
       <div className="capability-image">
-        <img src={src} alt={title} />
+        <Image
+          src={src}
+          alt={title}
+          fill
+          sizes="(max-width: 850px) 100vw, 380px"
+          loading={i === 0 ? 'eager' : 'lazy'}
+          priority={i === 0}
+        />
         <span className="scroll-stack-index">{String(i + 1).padStart(2, '0')}</span>
       </div>
     </div>
