@@ -2863,31 +2863,54 @@ svg {
 .scroll-stack-section {
   overflow: clip;
 }
-.scroll-stack-container {
-  position: relative;
-  width: 100%;
-  padding: 10vh 0 60vh;
+.capability-cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vw, 48px);
+  max-width: 1100px;
+  margin-inline: auto;
+  padding: 40px 16px 0;
 }
-@media (max-width: 850px) {
-  .scroll-stack-container {
-    padding-bottom: 40vh;
-  }
-}
-.scroll-stack-row {
+.capability-card {
   display: flex;
   align-items: center;
   gap: clamp(24px, 5vw, 60px);
-  max-width: 1100px;
-  margin-inline: auto;
-}
-.scroll-stack-card {
-  flex: 0 0 auto;
   border: 1px solid var(--line);
-  box-shadow: 0 30px 70px rgba(22, 42, 31, 0.18);
+  border-radius: 20px;
   background: var(--surface);
+  padding: clamp(20px, 3vw, 36px);
 }
-.scroll-stack-card img {
+.capability-copy {
+  min-width: 0;
+  flex: 1 1 320px;
+}
+.capability-copy .eyebrow {
+  margin-bottom: 10px;
+}
+.capability-copy h3 {
+  margin: 0 0 10px;
+  font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+  letter-spacing: -0.03em;
+}
+.capability-copy p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.capability-image {
+  position: relative;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border-radius: 14px;
+  width: clamp(220px, 30vw, 380px);
+  height: clamp(160px, 20vw, 260px);
+}
+.capability-image img {
   display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .scroll-stack-index {
   position: absolute;
@@ -2904,37 +2927,31 @@ svg {
   font-weight: 900;
   backdrop-filter: blur(4px);
 }
-.scroll-stack-copy {
-  min-width: 0;
-  max-width: 380px;
-}
-.scroll-stack-copy .eyebrow {
-  margin-bottom: 10px;
-}
-.scroll-stack-copy h3 {
-  margin: 0 0 10px;
-  font-size: clamp(1.3rem, 2.4vw, 1.9rem);
-  letter-spacing: -0.03em;
-}
-.scroll-stack-copy p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.7;
-}
 @media (max-width: 850px) {
-  .scroll-stack-row {
+  .capability-card {
     flex-direction: column;
     align-items: flex-start;
     gap: 18px;
   }
-  .scroll-stack-copy {
-    max-width: none;
+  .capability-image {
+    width: 100%;
+    height: 220px;
   }
 }
-@media (max-width: 560px) {
-  .scroll-stack-copy p {
-    display: none;
+@media (max-width: 480px) {
+  .capability-cards-grid {
+    padding: 24px 12px 0;
+    gap: 22px;
+  }
+  .capability-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+  .capability-image {
+    height: 180px;
+  }
+  .capability-copy p {
+    font-size: 13px;
   }
 }
 
