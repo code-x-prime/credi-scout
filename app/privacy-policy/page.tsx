@@ -16,7 +16,7 @@ export default function PrivacyPolicy() {
         <li><b>Company Name:</b> Brighto Credit Information Pvt. Ltd. (operating as CrediScout)</li>
         <li><b>Registered Address:</b> C-83, 1st Floor, Sector-2, Noida, India</li>
         <li><b>Contact Email:</b> Support@brightoindia.com</li>
-        <li><b>Contact Phone:</b> +91-9311463901</li>
+        <li><b>Contact Phone:</b> +91 120 453 9428</li>
       </ul>
     </React.Fragment>],
     ['3. Personal Data We Collect', <React.Fragment key="3. Personal Data We Collect">
@@ -107,13 +107,13 @@ export default function PrivacyPolicy() {
     ['12. Grievance Officer', <React.Fragment key="12. Grievance Officer">
       <p>In accordance with the DPDP Act, 2023 and the Information Technology Act, 2000, the name and contact details of our Grievance Officer are:</p>
       <p><b>Grievance Officer</b><br/>CrediScout Data Protection Team</p>
-      <p>Email: Support@brightoindia.com<br/>Phone: +91-9311463901<br/>Address: C-83, 1st Floor, Sector-2, Noida, India</p>
+      <p>Email: Support@brightoindia.com<br/>Phone: +91 120 453 9428<br/>Address: C-83, 1st Floor, Sector-2, Noida, India</p>
       <p>We will acknowledge your grievance within 24 hours and resolve it within 30 days.</p>
     </React.Fragment>],
     ['13. Contact Information', <React.Fragment key="13. Contact Information">
       <p>For any questions about this Privacy Policy or our data practices, please contact us:</p>
       <p><b>CrediScout Data Protection Office</b></p>
-      <p>Email: Support@brightoindia.com<br/>Call: +91-9311463901<br/>Address: C-83, 1st Floor, Sector-2, Noida, India</p>
+      <p>Email: Support@brightoindia.com<br/>Call: +91 120 453 9428<br/>Address: C-83, 1st Floor, Sector-2, Noida, India</p>
     </React.Fragment>],
     ['14. Changes to This Policy', <React.Fragment key="14. Changes to This Policy">
       <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated &ldquo;Last updated&rdquo; date. Material changes will be communicated via email or prominent notice on our website.</p>
