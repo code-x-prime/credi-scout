@@ -58,7 +58,24 @@ export function Header() {
   return <header className="site-header"><div className="container nav-wrap"><Link href="/" className="brand" aria-label="CrediScout home"><img src={logoUrl} alt="CrediScout" /></Link><nav className="desktop-nav" aria-label="Primary navigation">{navItems.map(n => <Link className={path === n.href ? 'active' : ''} key={n.href} href={n.href}>{n.label}</Link>)}</nav><Link href="/crm#demo" className="button button-dark nav-cta">Request a Demo <ArrowUpRight size={16} /></Link><button className="menu-button" aria-label={open ? 'Close menu' : 'Open menu'} onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</button></div>{open && <nav className="mobile-nav" aria-label="Mobile navigation">{navItems.map(n => <Link onClick={() => setOpen(false)} key={n.href} href={n.href}>{n.label}</Link>)}<Link onClick={() => setOpen(false)} href="/crm#demo" className="button button-green">Request a Demo <ArrowUpRight size={16} /></Link></nav>}</header>
 }
 
-export function Footer() { return <footer className="footer"><div className="container footer-grid"><div><Link href="/" className="brand footer-brand"><img src={logoUrl} alt="CrediScout" /></Link><p>Dynamic teams, trusted partnerships, lasting impact. Powering high-growth verification and risk operations for financial institutions.</p><div className="footer-social"><a href="https://www.linkedin.com/company/brighto-credit-information-pvt.-ltd./" target="_blank" rel="noopener noreferrer" aria-label="CrediScout on LinkedIn"><LinkedInIcon /></a></div></div><div><p className="eyebrow">Explore</p>{navItems.slice(1).map(n => <Link key={n.href} href={n.href}>{n.label}</Link>)}</div><div><p className="eyebrow">Capabilities</p>{services.slice(0, 4).map(s => <Link key={s[1]} href="/services">{s[1]}</Link>)}</div><div><p className="eyebrow">Contact</p><a href="mailto:Support@brightoindia.com"><Mail size={14} /> Support@brightoindia.com</a><a href="tel:+919311463901"><PhoneCall size={14} /> +91-9311463901</a><span className="footer-address"><MapPin size={14} /> C-83, 1st Floor, Sector-2, Noida, India</span></div></div><div className="container footer-note"><span>CrediScout is a product of Brighto Credit Information Private Limited.</span></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} Brighto Credit Information Private Limited. All Rights Reserved.</span><span className="footer-legal-links"><Link href="/privacy-policy">Privacy Policy</Link><Link href="/terms">Terms &amp; Conditions</Link></span></div></footer> }
+export function WhatsAppButton() {
+  const pathname = usePathname()
+  if (pathname?.startsWith('/admin')) return null
+  const phone = '919311463901'
+  const message = encodeURIComponent('Hello CrediScout! I would like to know more about your banking verification and field investigation services. Could you please share the details?')
+  const url = `https://wa.me/${phone}?text=${message}`
+  return (
+    <a href={url} target="_blank" rel="noopener noreferrer" className="fixed bottom-6 right-6 z-50 group" aria-label="Chat on WhatsApp">
+      <span className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-20" />
+      <span className="relative flex items-center gap-2 px-4 py-3 bg-green-500 text-white rounded-full shadow-lg shadow-green-500/30 hover:bg-green-600 hover:shadow-green-500/40 transition-all duration-300 hover:scale-105">
+        <img src="/whatsapp.png" alt="WhatsApp" width={24} height={24} className="w-6 h-6" />
+        <span className="text-sm font-semibold hidden sm:inline">Chat with us</span>
+      </span>
+    </a>
+  )
+}
+
+export function Footer() { return <footer className="footer"><div className="container footer-grid"><div><Link href="/" className="brand footer-brand"><img src={logoUrl} alt="CrediScout" /></Link><p>Dynamic teams, trusted partnerships, lasting impact. Powering high-growth verification and risk operations for financial institutions.</p><div className="footer-social"><a href="https://www.linkedin.com/company/brighto-credit-information-pvt.-ltd./" target="_blank" rel="noopener noreferrer" aria-label="CrediScout on LinkedIn"><LinkedInIcon /></a></div></div><div><p className="eyebrow">Explore</p>{navItems.slice(1).map(n => <Link key={n.href} href={n.href}>{n.label}</Link>)}</div><div><p className="eyebrow">Capabilities</p>{services.slice(0, 4).map(s => <Link key={s[1]} href="/services">{s[1]}</Link>)}</div><div><p className="eyebrow">Contact</p><a href="mailto:Support@brightoindia.com"><Mail size={14} /> Support@brightoindia.com</a><a href="tel:+919311463901"><PhoneCall size={14} /> +91-9311463901</a><a href="tel:+911204539428"><PhoneCall size={14} /> +91 120 453 9428</a><span className="footer-address"><MapPin size={14} /> C-83, 1st Floor, Sector-2, Noida, India</span></div></div><div className="container footer-note"><span>CrediScout is a product of Brighto Credit Information Private Limited.</span></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} Brighto Credit Information Private Limited. All Rights Reserved.</span><span className="footer-legal-links"><Link href="/privacy-policy">Privacy Policy</Link><Link href="/terms">Terms &amp; Conditions</Link></span></div></footer> }
 
 export function SectionHeading({ eyebrow, title, body, light = false }: { eyebrow: string, title: string, body?: string, light?: boolean }) { return <div className={`section-heading reveal ${light ? 'light' : ''}`}><p className="eyebrow">{eyebrow}</p><h2>{title}</h2>{body && <p className="lead">{body}</p>}</div> }
 export function CTA({ title = 'Ready to bring more visibility to verification?', body = 'Talk to our experts about building a more controlled, dependable workflow for your institution.' }: { title?: string, body?: string }) { return <section className="cta-section"><div className="container cta-inner reveal"><div><p className="eyebrow">Start a conversation</p><h2>{title}</h2><p>{body}</p></div><Link href="/crm#demo" className="button button-dark">Request a Demo <ArrowUpRight size={17} /></Link></div></section> }
@@ -163,23 +180,23 @@ export function DemoRequestForm() {
         phone: form.phone.trim(),
         subject: `[CrediScout] Inquiry for ${form.service}`,
         message: `Organization: ${form.organization || 'Not Specified'}\nService: ${form.service}\nSource Site: CrediScout\n\nMessage:\n${form.message.trim()}`,
+        source: 'CrediScout',
+        consent: form.consent ? 'true' : 'false',
       }
       let res = await fetch(`${API_BASE_URL}/api/contact`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
       if (!res.ok && res.status === 404) {
         res = await fetch(`${API_BASE_URL}/api/contact-us-api`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...payload, organization: form.organization, service: form.service, source: 'credi-scout' }) })
       }
       const data = await res.json().catch(() => ({}))
-      if (res.ok || data.success) {
+      if (res.ok && data.success !== false) {
         setSuccess(true)
         setForm({ name: '', organization: '', email: '', phone: '', service: DEMO_SERVICES[0], message: '', consent: false, website: '' })
       } else {
-        setSuccess(true)
-        setForm({ name: '', organization: '', email: '', phone: '', service: DEMO_SERVICES[0], message: '', consent: false, website: '' })
+        setError(data.error || 'Something went wrong. Please try again or contact us directly.')
       }
     } catch (err) {
       console.error('Contact submission attempt:', err)
-      setSuccess(true)
-      setForm({ name: '', organization: '', email: '', phone: '', service: DEMO_SERVICES[0], message: '', consent: false, website: '' })
+      setError('Network error. Please check your connection and try again.')
     } finally {
       setSubmitting(false)
     }
