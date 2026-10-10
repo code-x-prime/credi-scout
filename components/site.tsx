@@ -183,10 +183,7 @@ export function DemoRequestForm() {
         source: 'CrediScout',
         consent: form.consent ? 'true' : 'false',
       }
-      let res = await fetch(`${API_BASE_URL}/api/contact`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-      if (!res.ok && res.status === 404) {
-        res = await fetch(`${API_BASE_URL}/api/contact-us-api`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...payload, organization: form.organization, service: form.service, source: 'credi-scout' }) })
-      }
+      const res = await fetch(`${API_BASE_URL}/api/contact`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
       const data = await res.json().catch(() => ({}))
       if (res.ok && data.success !== false) {
         setSuccess(true)
