@@ -117,7 +117,7 @@ export function CRMPreview() {
 }
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_BRIGHTO_API_URL || 'https://www.brightoindia.com'
-const DEMO_SERVICES = services.map(s => s[1] as string).concat('Other / General Enquiry')
+const DEMO_SERVICES = services.map(s => s[1] as string).concat('Job Enquiry', 'Other / General Enquiry')
 
 interface DemoFormState { name: string, organization: string, email: string, phone: string, service: string, message: string, consent: boolean, website: string }
 type DemoFormErrors = Partial<Record<keyof DemoFormState, string>>
